@@ -438,7 +438,7 @@
         }
 
         .project-slide {
-            width: 403px; /* 100% / 6 slides */
+            width: 320px; /* 100% / 6 slides */
             flex-shrink: 0;
             padding: 10px 10px;
         }
@@ -552,11 +552,11 @@
         }
 
         .prev-btn {
-            left: -25px;
+            left: 10px;
         }
 
         .next-btn {
-            right: -25px;
+            right: 10px;
         }
 
         /* Slider Indicators */
@@ -744,6 +744,7 @@
         .footer-section {
             border-radius: 10px;
             padding: 10px;
+            padding-bottom: 30px;
         }
 
         .footer-section h3 {
@@ -1875,6 +1876,7 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
     justify-content: center;
     align-items: center;
     z-index: 999999;
+    
 ">
     <div style="
         background: white;
@@ -1887,7 +1889,7 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
         animation: fadeInUp 0.4s ease;
     ">
         <h2 style="margin-bottom: 15px; color: #2563eb;">🎉 Novidade!</h2>
-        <p style="margin-bottom: 20px; color: #eee1e1;">Estamos lançando um novo serviço exclusivo para nossos clientes. Clique abaixo para saber mais!</p>
+        <p style="margin-bottom: 20px; color: #f4f4f1;">Estamos lançando um novo serviço exclusivo para nossos clientes. Clique abaixo para saber mais!</p>
         <a href="#services" style="display: inline-block; padding: 10px 20px; background: #2563eb; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;">Saiba Mais</a>
         <br><br>
         <button id="closePopup" style="background: transparent; border: none; color: #888; cursor: pointer; font-size: 14px;">Fechar</button>
@@ -1902,6 +1904,15 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
 html.dark-mode #exitPopup div {
     background: #1f2937 !important;
     color: white !important;
+}
+
+#exitPopup p {
+    color: #1f2937 !important; /* cor no modo claro */
+}
+
+/* Modo escuro */
+html.dark-mode #exitPopup p {
+    color: #f4f4f1 !important; /* cor no modo escuro */
 }
 </style>
 
