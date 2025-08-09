@@ -1867,67 +1867,128 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
 </script>
 
 <!-- Popup de saída -->
-<div id="exitPopup" style="
+<style>
+/* ===== ESTILO DO POPUP ===== */
+.popup-overlay {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
     background: rgba(0,0,0,0.6);
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999999;
-    
-">
-    <div style="
-        background: white;
-        padding: 30px;
-        border-radius: 12px;
-        text-align: center;
-        max-width: 400px;
-        width: 90%;
-        box-shadow: 0 0 20px rgba(0,0,0,0.3);
-        animation: fadeInUp 0.4s ease;
-    ">
-        <h2 style="margin-bottom: 15px; color: #2563eb;">🎉 Novidade!</h2>
-        <p style="margin-bottom: 20px; color: #f4f4f1;">Estamos lançando um novo serviço exclusivo para nossos clientes. Clique abaixo para saber mais!</p>
-        <a href="#services" style="display: inline-block; padding: 10px 20px; background: #2563eb; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;">Saiba Mais</a>
-        <br><br>
-        <button id="closePopup" style="background: transparent; border: none; color: #888; cursor: pointer; font-size: 14px;">Fechar</button>
-    </div>
-</div>
-
-<style>
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-html.dark-mode #exitPopup div {
-    background: #1f2937 !important;
-    color: white !important;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
-#exitPopup p {
-    color: #1f2937 !important; /* cor no modo claro */
+.popup-overlay.active {
+    opacity: 1;
+    pointer-events: all;
 }
 
-/* Modo escuro */
-html.dark-mode #exitPopup p {
-    color: #f4f4f1 !important; /* cor no modo escuro */
+.popup-box {
+    background: #111;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 350px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 0 20px #0ff;
+    animation: popupFadeIn 0.4s ease;
+}
+
+.popup-box h2 {
+    color: #0ff;
+    margin-bottom: 10px;
+}
+
+.popup-box p {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.popup-box button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    background: #0ff;
+    color: #111;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.popup-box button:hover {
+    background: #00d9d9;
+}
+
+@keyframes popupFadeIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
 </style>
 
+<!-- ===== POPUP HTML ===== -->
+<div id="popup" class="popup-overlay">
+    <div class="popup-box">
+        <h2>🎁 Novidade Especial!</h2>
+        <p>Antes de sair, aproveite nossa oferta exclusiva.</p>
+        <button onclick="fecharPopup()">Fechar</button>
+    </div>
+</div>
+
 <script>
-let popupShown = false;
-document.addEventListener('mouseleave', function(e) {
-    if (e.clientY < 0 && !popupShown) {
-        document.getElementById('exitPopup').style.display = 'flex';
-        popupShown = true;
+const tempoInatividade = 10000; // 10 segundos para mobile
+let popupMostrado = false;
+let timerInatividade;
+let jaDesceu = false; // controla se o usuário já rolou para baixo
+
+function mostrarPopup() {
+    if (!popupMostrado) {
+        popupMostrado = true;
+        document.getElementById("popup").classList.add("active");
+    }
+}
+
+function fecharPopup() {
+    document.getElementById("popup").classList.remove("active");
+}
+
+/* ===== DESKTOP: Mostrar quando voltar ao topo ===== */
+window.addEventListener("scroll", () => {
+    let posicaoScroll = window.scrollY;
+
+    if (posicaoScroll > 200) {
+        jaDesceu = true;
+    }
+
+    if (jaDesceu && posicaoScroll < 50) {
+        mostrarPopup();
     }
 });
-document.getElementById('closePopup').addEventListener('click', function() {
-    document.getElementById('exitPopup').style.display = 'none';
+
+/* ===== DESKTOP: Mostrar quando mouse sai da área do site ===== */
+document.addEventListener("mouseleave", (event) => {
+    if (event.clientY <= 0) { // saiu pelo topo
+        mostrarPopup();
+    }
 });
+
+/* ===== MOBILE: Timer de inatividade ===== */
+function resetarInatividade() {
+    clearTimeout(timerInatividade);
+    timerInatividade = setTimeout(mostrarPopup, tempoInatividade);
+}
+
+document.addEventListener("touchstart", resetarInatividade);
+document.addEventListener("scroll", resetarInatividade);
+resetarInatividade();
 </script>
+
+
 
 </body>
 </html>
