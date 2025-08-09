@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenvolvedor Web - Soluções Digitais Profissionais</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #06b6d4;
+            --success-color: #10b981;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --gradient-primary: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            --gradient-secondary: linear-gradient(135deg, #1e40af 0%, #0891b2 100%);
+            --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-heavy: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 15px auto;
+            padding: 0 20px;
+        
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+            
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;    
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 50 0 L 0 0 0 50" fill="none" stroke="%23e2e8f0" stroke-width="1" opacity="0.3"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            animation: slideInLeft 1s ease-out 0.2s both;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            animation: slideInLeft 1s ease-out 0.4s both;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: slideInRight 1s ease-out;
+        }
+
+        .code-window {
+            background: #1f2937;
+            border-radius: 12px;
+            box-shadow: var(--shadow-heavy);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .window-header {
+            background: #374151;
+            padding: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .window-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-green { background: #10b981; }
+
+        .code-content {
+            padding: 2rem;
+            font-family: 'Courier New', monospace;
+            color: #e5e7eb;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .code-line {
+            opacity: 0;
+            animation: typewriter 0.5s ease-out forwards;
+        }
+
+        .keyword { color: #60a5fa; }
+        .string { color: #34d399; }
+        .comment { color: #9ca3af; }
+
+        /* Trust Indicators */
+        .trust-section {
+            padding: 4rem 0;
+            background: var(--bg-white);
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .trust-card {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #cdd9ef;
+        }
+
+        .trust-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .trust-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 6rem 0;
+            background: var(--bg-light);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .section-title p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--bg-white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.75rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: #e0f2fe;
+            color: #0891b2;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            padding: 60px 0;
+            background: var(--bg-white);
+        }
+
+        /* Portfolio Slider Styles */
+        .portfolio-slider-container {
+            position: relative;
+            max-width: auto;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .portfolio-slider {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 600%; /* 6 slides */
+        }
+
+        .project-slide {
+            width: 100%; /* 100% / 6 slides */
+            flex-shrink: 0;
+            padding: 30px 30px;
+            
+        }
+
+        .project-slide.active .project-card {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .project-slide .project-card {
+            opacity: 0.8;
+            transform: scale(0.95);
+            transition: all 0.5s ease;
+            margin: 0;
+        }
+
+        .project-card {
+            background: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: var(--shadow-light);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .project-image {
+            height: 200px;
+            background: var(--gradient-primary);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .project-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .project-btn {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Slider Navigation Buttons */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-150%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            box-shadow: var(--shadow-medium);
+            transition: all 0.3s ease;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+
+        .slider-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .prev-btn {
+            left: -25px;
+        }
+
+        .next-btn {
+            right: -25px;
+        }
+
+        /* Slider Indicators */
+        .slider-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: none;
+            background: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .indicator:hover {
+            background: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        .indicator.active {
+            background: var(--primary-color);
+            transform: scale(1.3);
+        }
+
+        .indicator.active::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: indicatorPulse 2s infinite;
+        }
+
+        @keyframes indicatorPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.1;
+            }
+        }
+
+        /* Mobile Responsive for Slider */
+        @media (max-width: 768px) {
+            .slider-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .prev-btn {
+                left: -20px;
+            }
+
+            .next-btn {
+                right: -20px;
+            }
+
+            .portfolio-slider-container {
+                margin: 30px 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .prev-btn {
+                left: 10px;
+            }
+
+            .next-btn {
+                right: 10px;
+            }
+
+            .portfolio-slider-container {
+                margin: 0 auto;
+            }
+
+            .slider-btn {
+                background: rgba(37, 99, 235, 0.9);
+                color: white;
+            }
+
+            .slider-btn:hover {
+                background: var(--primary-color);
+            }
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><circle cx="100" cy="100" r="2" fill="white" opacity="0.1"/><circle cx="300" cy="200" r="1" fill="white" opacity="0.1"/><circle cx="500" cy="150" r="3" fill="white" opacity="0.1"/><circle cx="700" cy="300" r="2" fill="white" opacity="0.1"/><circle cx="900" cy="250" r="1" fill="white" opacity="0.1"/></svg>');
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.125rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .whatsapp-btn:hover {
+            background: #20b858;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .no-payment-notice {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 3rem auto 0;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes typewriter {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transition: left 0.3s ease;
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
+                font-weight: 600;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .trust-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    
+        
+/* Botão de alternar tema moderno */
+.theme-toggle {
+    width: 50px;
+    height: 26px;
+    background: var(--bg-light);
+    border-radius: 50px;
+    border: 2px solid var(--primary-color);
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+}
+
+.theme-toggle .toggle-circle {
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    position: absolute;
+    left: 2px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.75rem;
+}
+
+html.dark-mode .theme-toggle {
+    background: var(--bg-white) !important;
+    border-color: var(--accent-color) !important;
+}
+
+html.dark-mode .theme-toggle .toggle-circle {
+    left: 26px !important;
+    background: var(--accent-color) !important;
+    box-shadow: 0 0 10px var(--accent-color) !important;
+}
+
+/* Efeitos adicionais no modo escuro */
+html.dark-mode body {
+    background: radial-gradient(circle at 20% 20%, #0b1220, #050a15) !important;
+}
+
+html.dark-mode header, 
+html.dark-mode .service-card,
+html.dark-mode .trust-card,
+html.dark-mode .project-card {
+    box-shadow: 0 0 15px rgba(33, 150, 243, 0.2) !important;
+}
+
+html.dark-mode .hero-text h1 {
+    text-shadow: 0 0 10px rgba(33, 150, 243, 0.6) !important;
+}
+
+html.dark-mode a:hover {
+    text-shadow: 0 0 5px var(--accent-color) !important;
+}
+
+
+/* Neon Glow e Interatividade no Modo Escuro */
+html.dark-mode .service-card,
+html.dark-mode .trust-card,
+html.dark-mode .project-card {
+    box-shadow: 0 0 15px rgba(33, 150, 243, 0.3), 0 0 30px rgba(33, 150, 243, 0.15) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+html.dark-mode .service-card:hover,
+html.dark-mode .trust-card:hover,
+html.dark-mode .project-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 0 20px rgba(33, 150, 243, 0.5), 0 0 40px rgba(33, 150, 243, 0.25) !important;
+}
+
+/* Ícones com brilho */
+html.dark-mode .service-icon,
+html.dark-mode .trust-icon {
+    box-shadow: 0 0 10px rgba(33, 150, 243, 0.6) !important;
+    transition: box-shadow 0.3s ease !important;
+}
+
+html.dark-mode .service-icon:hover,
+html.dark-mode .trust-icon:hover {
+    box-shadow: 0 0 15px rgba(33, 150, 243, 0.9) !important;
+}
+
+</style>
+
+<style>
+/* ===== Nav overrides for dark mode (including mobile menu when active) ===== */
+html.dark-mode .nav-links {
+    background: rgba(17,24,39,0.95) !important;
+}
+html.dark-mode .nav-links.active {
+    left: 0 !important;
+    background: rgba(17,24,39,0.98) !important;
+}
+html.dark-mode .nav-links a {
+    color: var(--text-primary) !important;
+}
+html.dark-mode .mobile-menu-btn span {
+    background: var(--text-primary) !important;
+}
+</style>
+<style id="dark-mode-override">
+html.dark-mode {
+  --primary-color: #60a5fa;
+  --secondary-color: #1e3a8a;
+  --accent-color: #06b6d4;
+  --text-primary: #e6eef8;
+  --text-secondary: #9ca3af;
+  --bg: #0b1220;
+  --card-bg: #071127;
+  --glass: rgba(255,255,255,0.02);
+}
+html.dark-mode body { background: linear-gradient(180deg,#071025 0%, #071022 100%) !important; color: var(--text-primary) !important; }
+html.dark-mode .hero { background: linear-gradient(135deg, #071022 0%, #081426 100%) !important; }
+html.dark-mode .hero::before { background: none !important; opacity: 0.2 !important; }
+html.dark-mode .hero-text h1, html.dark-mode .hero-text p, html.dark-mode .service-card p, html.dark-mode .project-content p, html.dark-mode .trust-card p { color: var(--text-secondary) !important; }
+html.dark-mode .code-window, html.dark-mode .service-card, html.dark-mode .trust-card, html.dark-mode .project-card, html.dark-mode .project-image, html.dark-mode .footer-section, html.dark-mode .cta-section { background: #071127 !important; border-color: #0f1724 !important; color: var(--text-primary) !important; box-shadow: none !important; }
+html.dark-mode .window-header { background: #0f1724 !important; }
+html.dark-mode .trust-section, html.dark-mode .services, html.dark-mode .portfolio, html.dark-mode .cta-section { background: transparent !important; }
+html.dark-mode .btn-primary { background: linear-gradient(90deg,#2563eb,#06b6d4) !important; color: #fff !important; }
+html.dark-mode .btn-secondary { background: transparent !important; color: #bfdbfe !important; border-color: rgba(191,219,254,0.18) !important; }
+html.dark-mode footer { background: #020617 !important; color: var(--text-secondary) !important; }
+html.dark-mode .social-link { background: linear-gradient(90deg,#184e9e,#07808e) !important; }
+html.dark-mode .whatsapp-btn, .cta-fixed { background: linear-gradient(90deg,#06b6d4,#10b981) !important; color: white !important; }
+html.dark-mode .nav-links a { color: var(--text-primary) !important; }
+html.dark-mode .logo { filter: drop-shadow(0 6px 18px rgba(37,99,235,0.2)) !important; }
+html.dark-mode .trust-icon, .service-icon { background: linear-gradient(90deg,#2563eb,#06b6d4) !important; }
+html.dark-mode .project-image { background: linear-gradient(135deg,#0b2540,#083058) !important; }
+html.dark-mode .no-payment-notice { background: rgba(255,255,255,0.03) !important; border-color: rgba(255,255,255,0.06) !important; color: var(--text-primary) !important; }
+html.dark-mode .mobile-menu-btn span { background: var(--text-primary) !important; }
+html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-primary) !important; }
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">Smart Site </div>
+            <ul class="nav-links">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#services">Serviços</a></li>
+                <li><a href="#portfolio">Portfólio</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+
+            <div id="themeToggle" class="theme-toggle" title="Alternar tema">
+    <div class="toggle-circle"><i class="fas fa-sun"></i></div>
+</div>
+
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Soluções Web Profissionais</h1>
+                    <p>Desenvolvedor especializado em criar sites modernos, responsivos e otimizados. Transformo suas ideias em realidade digital com as melhores tecnologias do mercado.</p>
+                    <div class="hero-cta">
+                        <a href="#contact" class="btn btn-primary">
+                            <i class="fab fa-whatsapp"></i>
+                            Solicitar Orçamento
+                        </a>
+                        <a href="#portfolio" class="btn btn-secondary">
+                            <i class="fas fa-eye"></i>
+                            Ver Projetos
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual floating">
+                    <div class="code-window">
+                        <div class="window-header">
+                            <div class="window-dot dot-red"></div>
+                            <div class="window-dot dot-yellow"></div>
+                            <div class="window-dot dot-green"></div>
+                        </div>
+                        <div class="code-content">
+                            <div class="code-line" style="animation-delay: 0.5s;">
+                                <span class="keyword">function</span> <span class="string">criarSiteModerno</span>() {
+                            </div>
+                            <div class="code-line" style="animation-delay: 1s;">
+                                &nbsp;&nbsp;<span class="comment">// Design responsivo</span>
+                            </div>
+                            <div class="code-line" style="animation-delay: 1.5s;">
+                                &nbsp;&nbsp;<span class="keyword">return</span> {
+                            </div>
+                            <div class="code-line" style="animation-delay: 2s;">
+                                &nbsp;&nbsp;&nbsp;&nbsp;html: <span class="string">'semântico'</span>,
+                            </div>
+                            <div class="code-line" style="animation-delay: 2.5s;">
+                                &nbsp;&nbsp;&nbsp;&nbsp;css: <span class="string">'moderno'</span>,
+                            </div>
+                            <div class="code-line" style="animation-delay: 3s;">
+                                &nbsp;&nbsp;&nbsp;&nbsp;js: <span class="string">'interativo'</span>
+                            </div>
+                            <div class="code-line" style="animation-delay: 3.5s;">
+                                &nbsp;&nbsp;};
+                            </div>
+                            <div class="code-line" style="animation-delay: 4s;">
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Indicators -->
+    <section class="trust-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Por que escolher nossos serviços?</h2>
+            </div>
+            <div class="trust-grid">
+                <div class="trust-card fade-in">
+                    <div class="trust-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>100% Seguro</h3>
+                    <p>Código limpo e seguro, seguindo as melhores práticas de desenvolvimento</p>
+                </div>
+                <div class="trust-card fade-in">
+                    <div class="trust-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Performance</h3>
+                    <p>Sites otimizados para carregamento rápido e excelente experiência do usuário</p>
+                </div>
+                <div class="trust-card fade-in">
+                    <div class="trust-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsivo</h3>
+                    <p>Design adaptável que funciona perfeitamente em todos os dispositivos</p>
+                </div>
+                <div class="trust-card fade-in">
+                    <div class="trust-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Suporte Total</h3>
+                    <p>Acompanhamento completo do projeto com suporte pós-entrega</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Serviços Especializados</h2>
+                <p>Oferecemos soluções completas em desenvolvimento web com foco em resultados e satisfação do cliente</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Desenvolvimento Web</h3>
+                    <p>Sites modernos e responsivos desenvolvidos com HTML5, CSS3 e JavaScript, garantindo performance e usabilidade excepcionais.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Responsive</span>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <h3>Automação Python</h3>
+                    <p>Scripts e aplicações Python para automatizar processos, integrar APIs e criar soluções personalizadas para seu negócio.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">APIs</span>
+                        <span class="tech-tag">Automação</span>
+                        <span class="tech-tag">Data Processing</span>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Otimização SEO</h3>
+                    <p>Implementação de técnicas avançadas de SEO para melhorar o posicionamento do seu site nos mecanismos de busca.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">SEO</span>
+                        <span class="tech-tag">Performance</span>
+                        <span class="tech-tag">Analytics</span>
+                        <span class="tech-tag">Acessibilidade</span>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3>Pixel de Rastreamento</h3>
+                    <p>Implementação de pixels do Facebook, Google Analytics, Google Ads e outras plataformas para rastreamento completo de conversões.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Facebook Pixel</span>
+                        <span class="tech-tag">Google Analytics</span>
+                        <span class="tech-tag">Cookies</span>
+                        <span class="tech-tag">Conversões</span>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>E-commerce Completo</h3>
+                    <p>Lojas virtuais com carrinho de compras, gateway de pagamento, gestão de estoque e painel administrativo completo.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Carrinho</span>
+                        <span class="tech-tag">Pagamentos</span>
+                        <span class="tech-tag">Estoque</span>
+                        <span class="tech-tag">Admin Panel</span>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Landing Pages</h3>
+                    <p>Páginas de alta conversão otimizadas para vendas, captação de leads e campanhas de marketing digital.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Conversão</span>
+                        <span class="tech-tag">CRO</span>
+                        <span class="tech-tag">A/B Testing</span>
+                        <span class="tech-tag">Marketing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Projetos Realizados</h2>
+                <p>Confira alguns dos projetos desenvolvidos com excelência e atenção aos detalhes</p>
+            </div>
+            
+            <!-- Portfolio Slider -->
+            <div class="portfolio-slider-container">
+                <div class="portfolio-slider">
+                    <!-- Project 1 -->
+                    <div class="project-slide active">
+                        <div class="project-card">
+                            <div class="project-image">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="project-content">
+                                <h3>E-commerce Moderno</h3>
+                                <p>Loja virtual completa com carrinho de compras, sistema de pagamento integrado e painel administrativo funcional.</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">HTML5</span>
+                                    <span class="tech-tag">CSS3</span>
+                                    <span class="tech-tag">JavaScript</span>
+                                    <span class="tech-tag">Python</span>
+                                </div>
+                                <div class="project-footer">
+                                    <a href="#" class="project-btn">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Ver Projeto
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="project-slide">
+                        <div class="project-card">
+                            <div class="project-image">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div class="project-content">
+                                <h3>Site Corporativo</h3>
+                                <p>Website institucional com design profissional, otimizado para conversões e totalmente responsivo.</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">HTML5</span>
+                                    <span class="tech-tag">CSS3</span>
+                                    <span class="tech-tag">JavaScript</span>
+                                    <span class="tech-tag">SEO</span>
+                                </div>
+                                <div class="project-footer">
+                                    <a href="#" class="project-btn">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Ver Projeto
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="project-slide">
+                        <div class="project-card">
+                            <div class="project-image">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="project-content">
+                                <h3>Dashboard Analytics</h3>
+                                <p>Painel de controle interativo com gráficos em tempo real e integração com múltiplas fontes de dados.</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">JavaScript</span>
+                                    <span class="tech-tag">APIs</span>
+                                    <span class="tech-tag">Charts</span>
+                                </div>
+                                <div class="project-footer">
+                                    <a href="#" class="project-btn">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Ver Projeto
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 4 -->
+                    <div class="project-slide">
+                        <div class="project-card">
+                            <div class="project-image">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="project-content">
+                                <h3>Landing Page</h3>
+                                <p>Página de alta conversão para campanha de marketing com design impactante e formulários otimizados.</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">HTML5</span>
+                                    <span class="tech-tag">CSS3</span>
+                                    <span class="tech-tag">CRO</span>
+                                    <span class="tech-tag">Analytics</span>
+                                </div>
+                                <div class="project-footer">
+                                    <a href="#" class="project-btn">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Ver Projeto
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 5 -->
+                    <div class="project-slide">
+                        <div class="project-card">
+                            <div class="project-image">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="project-content">
+                                <h3>Automação Python</h3>
+                                <p>Sistema de automação completo para processamento de dados e integração com APIs externas.</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">APIs</span>
+                                    <span class="tech-tag">Automação</span>
+                                    <span class="tech-tag">Data</span>
+                                </div>
+                                <div class="project-footer">
+                                    <a href="#" class="project-btn">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Ver Projeto
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 6 -->
+                    <div class="project-slide">
+                        <div class="project-card">
+                            <div class="project-image">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="project-content">
+                                <h3>App Web Responsivo</h3>
+                                <p>Aplicação web progressiva com interface moderna e funcionalidades avançadas para mobile.</p>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">PWA</span>
+                                    <span class="tech-tag">JavaScript</span>
+                                    <span class="tech-tag">Mobile First</span>
+                                    <span class="tech-tag">API</span>
+                                </div>
+                                <div class="project-footer">
+                                    <a href="#" class="project-btn">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Ver Projeto
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Arrows -->
+                <button class="slider-btn prev-btn" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="slider-btn next-btn" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Slider Indicators -->
+                <div class="slider-indicators">
+                    <button class="indicator active" data-slide="0"></button>
+                    <button class="indicator" data-slide="1"></button>
+                    <button class="indicator" data-slide="2"></button>
+                    <button class="indicator" data-slide="3"></button>
+                    <button class="indicator" data-slide="4"></button>
+                    <button class="indicator" data-slide="5"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <div class="cta-content fade-in">
+                <h2>Pronto para começar seu projeto?</h2>
+                <p>Entre em contato agora mesmo e receba uma proposta personalizada sem compromisso</p>
+                <a href="https://wa.me/5584999999999?text=Olá! Gostaria de solicitar um orçamento para desenvolvimento de site." class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i>
+                    Solicitar Orçamento Grátis
+                </a>
+                <div class="no-payment-notice">
+                    <i class="fas fa-shield-alt" style="margin-right: 0.5rem;"></i>
+                    <strong>Sem pagamento antecipado!</strong><br>
+                    Você só paga após a aprovação do projeto finalizado
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Tecnologias</h3>
+                    <p>HTML5, CSS3, JavaScript<br>Python, APIs, Automação<br>SEO, Performance, Responsivo<br>Pixels de Rastreamento</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Serviços</h3>
+                    <p>Desenvolvimento Web<br>Automação Python<br>Landing Pages<br>E-commerce<br>Pixel Tracking<br>Suporte Técnico</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <p>WhatsApp: (84) 9 9999-9999<br>Email: contato@devwebpro.com<br>Parelhas, RN - Brasil</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #374151; padding-top: 2rem; margin-top: 2rem;">
+                <p>&copy; 2025 DevWeb Pro. Todos os direitos reservados. Desenvolvido com ❤️ em Parelhas, RN.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+        <a href="https://wa.me/5584999999999?text=Olá! Gostaria de mais informações sobre seus serviços." 
+           style="display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; background: #25d366; color: white; border-radius: 50%; text-decoration: none; font-size: 1.5rem; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4); transition: all 0.3s ease; animation: pulse 2s infinite;"
+           class="whatsapp-float">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <style>
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background: #20b858 !important;
+        }
+    
+        /* Dark Mode */
+        html.dark-mode {
+            --primary-color: #60a5fa;
+            --secondary-color: #3b82f6;
+            --accent-color: #22d3ee;
+            --success-color: #34d399;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --bg-light: #1f2937;
+            --bg-white: #111827;
+        }
+        html.dark-mode body {
+            background: var(--bg-light);
+            color: var(--text-primary);
+        }
+        html.dark-mode header {
+            background: rgba(17, 24, 39, 0.95);
+        }
+        html.dark-mode .nav-links a {
+            color: var(--text-primary);
+        }
+        html.dark-mode .service-card,
+        html.dark-mode .trust-card,
+        html.dark-mode .project-card,
+        html.dark-mode .footer-section {
+            background: var(--bg-white);
+            border-color: #374151;
+        }
+        html.dark-mode .cta-section {
+            background: linear-gradient(135deg, #3b82f6 0%, #22d3ee 100%);
+        }
+        html.dark-mode footer {
+            background: #0f172a;
+        }
+
+</style>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        
+        // Header background on scroll (dark-mode aware)
+        function updateHeaderOnScroll() {
+            const header = document.querySelector('header');
+            const isDark = document.documentElement.classList.contains('dark-mode');
+            if (window.scrollY > 100) {
+                if (isDark) {
+                    header.style.background = 'rgba(17, 24, 39, 0.95)';
+                    header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.6)';
+                } else {
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                    header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+                }
+            } else {
+                if (isDark) {
+                    header.style.background = 'transparent';
+                    header.style.boxShadow = 'none';
+                } else {
+                    header.style.background = 'rgba(255,255,255,0.95)';
+                    header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                }
+            }
+        }
+        window.addEventListener('scroll', updateHeaderOnScroll);
+        window.addEventListener('load', updateHeaderOnScroll);
+
+
+        // Portfolio Slider Functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.project-slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const slider = document.querySelector('.portfolio-slider');
+        const totalSlides = slides.length;
+
+        function updateSlider() {
+            // Move slider
+            const translateX = -(currentSlide * (100 / totalSlides));
+            slider.style.transform = `translateX(${translateX}%)`;
+
+            // Update active classes
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
+
+        function goToSlide(slideIndex) {
+            currentSlide = slideIndex;
+            updateSlider();
+        }
+
+        // Event listeners for navigation
+        document.getElementById('nextBtn').addEventListener('click', nextSlide);
+        document.getElementById('prevBtn').addEventListener('click', prevSlide);
+
+        // Event listeners for indicators
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => goToSlide(index));
+        });
+
+        // Auto-slide functionality (optional)
+        let autoSlideInterval;
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(nextSlide, 5000); // 5 seconds
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+
+        // Start auto-slide
+        startAutoSlide();
+
+        // Pause auto-slide on hover
+        const sliderContainer = document.querySelector('.portfolio-slider-container');
+        sliderContainer.addEventListener('mouseenter', stopAutoSlide);
+        sliderContainer.addEventListener('mouseleave', startAutoSlide);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+                stopAutoSlide();
+                setTimeout(startAutoSlide, 3000); // Restart after 3 seconds
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+                stopAutoSlide();
+                setTimeout(startAutoSlide, 3000);
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let startX = 0;
+        let endX = 0;
+
+        sliderContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            stopAutoSlide();
+        });
+
+        sliderContainer.addEventListener('touchmove', (e) => {
+            endX = e.touches[0].clientX;
+        });
+
+        sliderContainer.addEventListener('touchend', () => {
+            const diff = startX - endX;
+            const threshold = 50; // Minimum swipe distance
+
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) {
+                    nextSlide(); // Swipe left - next slide
+                } else {
+                    prevSlide(); // Swipe right - previous slide
+                }
+            }
+            
+            setTimeout(startAutoSlide, 3000); // Restart auto-slide after touch
+        });
+
+        // Initialize slider
+        updateSlider();
+
+        // Add typing effect to code
+        const codeLines = document.querySelectorAll('.code-line');
+        let delay = 500;
+        
+        codeLines.forEach((line, index) => {
+            setTimeout(() => {
+                line.style.opacity = '1';
+                line.style.transform = 'translateY(0)';
+            }, delay);
+            delay += 500;
+        });
+
+        // Add particle effect to hero section
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                background: linear-gradient(45deg, #2563eb, #06b6d4);
+                border-radius: 50%;
+                pointer-events: none;
+                opacity: 0;
+                animation: particleFloat 4s ease-out forwards;
+                left: ${Math.random() * 100}%;
+                top: 100%;
+            `;
+            
+            document.querySelector('.hero').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 4000);
+        }
+
+        // Add particle animation CSS
+        const particleStyle = document.createElement('style');
+        particleStyle.textContent = `
+            @keyframes particleFloat {
+                0% {
+                    opacity: 0;
+                    transform: translateY(0) rotate(0deg);
+                }
+                10% {
+                    opacity: 1;
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-100vh) rotate(360deg);
+                }
+            }
+        `;
+        document.head.appendChild(particleStyle);
+
+        // Create particles periodically
+        setInterval(createParticle, 2000);
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Add click tracking for CTA buttons
+        document.querySelectorAll('.whatsapp-btn, .whatsapp-float').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Add success feedback
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> Redirecionando...';
+                btn.style.background = '#10b981';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '#25d366';
+                }, 2000);
+            });
+        });
+
+        // Add scroll progress indicator
+        const progressBar = document.createElement('div');
+        progressBar.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #2563eb, #06b6d4);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        `;
+        document.body.appendChild(progressBar);
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + '%';
+        });
+    
+        // Tema Claro/Escuro
+        const rootEl = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme) {
+            rootEl.classList.toggle('dark-mode', savedTheme === 'dark');
+        } else {
+            rootEl.classList.toggle('dark-mode', prefersDark);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = rootEl.classList.toggle('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            // Atualiza o header imediatamente para refletir o tema
+            if (typeof updateHeaderOnScroll === 'function') updateHeaderOnScroll();
+        });
+
+</script>
+</body>
+</html>
+                
