@@ -433,12 +433,12 @@
 
         .portfolio-slider {
             display: flex;
-            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            width: 600%; /* 6 slides */
+            overflow-x: auto;
+            scroll-behavior: smooth;
         }
 
         .project-slide {
-            width: 320px; /* 100% / 6 slides */
+            width: 320px;
             flex-shrink: 0;
             padding: 10px 10px;
         }
@@ -1151,7 +1151,7 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
                         <i class="fas fa-headset"></i>
                     </div>
                     <h3>Suporte Total</h3>
-                    <p>Acompanhamento completo do projeto com suporte pós-entrega</p>
+                    <p>Acompanhamento completo do projeto com suporte pós-entrega(Opcional)</p>
                 </div>
             </div>
         </div>
@@ -1316,7 +1316,7 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
                                 <img src="rosa do deserto.png" alt="">
                             </div>
                             <div class="project-content">
-                                <h3>Dashboard Analytics</h3>
+                                <h3>Página de Venda Rosas do Deserto</h3>
                                 <p>Painel de controle interativo com gráficos em tempo real e integração com múltiplas fontes de dados.</p>
                                 <div class="tech-tags">
                                     <span class="tech-tag">Python</span>
@@ -1325,7 +1325,7 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
                                     <span class="tech-tag">Charts</span>
                                 </div>
                                 <div class="project-footer">
-                                    <a href="#" class="project-btn">
+                                    <a href="https://joaocarlosweb.github.io/manualcompletorosadodeserto/" class="project-btn" target="_blank">
                                         <i class="fas fa-external-link-alt"></i>
                                         Ver Projeto
                                     </a>
@@ -1338,10 +1338,10 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
                     <div class="project-slide">
                         <div class="project-card">
                             <div class="project-image">
-                                <i class="fas fa-rocket"></i>
+                                <img src="tudolist.png" alt="">
                             </div>
                             <div class="project-content">
-                                <h3>Landing Page</h3>
+                                <h3>Tudo List</h3>
                                 <p>Página de alta conversão para campanha de marketing com design impactante e formulários otimizados.</p>
                                 <div class="tech-tags">
                                     <span class="tech-tag">HTML5</span>
@@ -1350,7 +1350,7 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
                                     <span class="tech-tag">Analytics</span>
                                 </div>
                                 <div class="project-footer">
-                                    <a href="#" class="project-btn">
+                                    <a href="https://joaocarlosweb.github.io/todolist/" class="project-btn" target="_blank">
                                         <i class="fas fa-external-link-alt"></i>
                                         Ver Projeto
                                     </a>
@@ -1363,10 +1363,10 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
                     <div class="project-slide">
                         <div class="project-card">
                             <div class="project-image">
-                                <i class="fas fa-robot"></i>
+                                <img src="marketing smart.png" alt="">
                             </div>
                             <div class="project-content">
-                                <h3>Automação Python</h3>
+                                <h3>Marketing Smart</h3>
                                 <p>Sistema de automação completo para processamento de dados e integração com APIs externas.</p>
                                 <div class="tech-tags">
                                     <span class="tech-tag">Python</span>
@@ -1375,7 +1375,7 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
                                     <span class="tech-tag">Data</span>
                                 </div>
                                 <div class="project-footer">
-                                    <a href="#" class="project-btn">
+                                    <a href="https://joaocarlosweb.github.io/marketinSmart/" class="project-btn" target="_blank">
                                         <i class="fas fa-external-link-alt"></i>
                                         Ver Projeto
                                     </a>
@@ -1388,10 +1388,10 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
                     <div class="project-slide">
                         <div class="project-card">
                             <div class="project-image">
-                                <i class="fas fa-mobile-alt"></i>
+                                <img src="site de bandas.png" alt="">
                             </div>
                             <div class="project-content">
-                                <h3>App Web Responsivo</h3>
+                                <h3>Sertão Sangrento</h3>
                                 <p>Aplicação web progressiva com interface moderna e funcionalidades avançadas para mobile.</p>
                                 <div class="tech-tags">
                                     <span class="tech-tag">PWA</span>
@@ -1400,7 +1400,7 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
                                     <span class="tech-tag">API</span>
                                 </div>
                                 <div class="project-footer">
-                                    <a href="#" class="project-btn">
+                                    <a href="https://joaocarlosweb.github.io/sertaosangrento1/" class="project-btn" target="_blank">
                                         <i class="fas fa-external-link-alt"></i>
                                         Ver Projeto
                                     </a>
@@ -1632,114 +1632,72 @@ html.dark-mode #themeToggle, html.dark-mode #themeToggle i { color: var(--text-p
         window.addEventListener('load', updateHeaderOnScroll);
 
 
-        // Portfolio Slider Functionality
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.project-slide');
-        const indicators = document.querySelectorAll('.indicator');
+        // Portfolio Slider Functionality (manual scroll, um card por vez)
         const slider = document.querySelector('.portfolio-slider');
-        const totalSlides = slides.length;
+        const slides = document.querySelectorAll('.project-slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indicators = document.querySelectorAll('.indicator');
+        let currentSlide = 0;
 
         function updateSlider() {
-            // Move slider
-            const translateX = -(currentSlide * (100 / totalSlides));
-            slider.style.transform = `translateX(${translateX}%)`;
-
-            // Update active classes
-            slides.forEach((slide, index) => {
-                slide.classList.toggle('active', index === currentSlide);
+            const slideWidth = slides[0].offsetWidth + 20; // largura + padding
+            slider.scrollTo({
+                left: slideWidth * currentSlide,
+                behavior: 'smooth'
             });
-
-            indicators.forEach((indicator, index) => {
-                indicator.classList.toggle('active', index === currentSlide);
+            indicators.forEach((ind, idx) => {
+                ind.classList.toggle('active', idx === currentSlide);
             });
         }
 
         function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            updateSlider();
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlider();
+            }
         }
 
         function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            updateSlider();
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlider();
+            }
         }
 
-        function goToSlide(slideIndex) {
-            currentSlide = slideIndex;
-            updateSlider();
-        }
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
 
-        // Event listeners for navigation
-        document.getElementById('nextBtn').addEventListener('click', nextSlide);
-        document.getElementById('prevBtn').addEventListener('click', prevSlide);
-
-        // Event listeners for indicators
         indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => goToSlide(index));
+            indicator.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlider();
+            });
         });
 
-        // Auto-slide functionality (optional)
-        let autoSlideInterval;
-
-        function startAutoSlide() {
-            autoSlideInterval = setInterval(nextSlide, 5000); // 5 seconds
-        }
-
-        function stopAutoSlide() {
-            clearInterval(autoSlideInterval);
-        }
-
-        // Start auto-slide
-        startAutoSlide();
-
-        // Pause auto-slide on hover
-        const sliderContainer = document.querySelector('.portfolio-slider-container');
-        sliderContainer.addEventListener('mouseenter', stopAutoSlide);
-        sliderContainer.addEventListener('mouseleave', startAutoSlide);
-
-        // Keyboard navigation
+        // Suporte a teclado
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                prevSlide();
-                stopAutoSlide();
-                setTimeout(startAutoSlide, 3000); // Restart after 3 seconds
-            } else if (e.key === 'ArrowRight') {
-                nextSlide();
-                stopAutoSlide();
-                setTimeout(startAutoSlide, 3000);
-            }
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'ArrowRight') nextSlide();
         });
 
-        // Touch/swipe support for mobile
+        // Suporte a swipe
         let startX = 0;
-        let endX = 0;
-
-        sliderContainer.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            stopAutoSlide();
+        slider.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+        slider.addEventListener('touchend', e => {
+            let diff = startX - e.changedTouches[0].clientX;
+            if (diff > 50) nextSlide();
+            if (diff < -50) prevSlide();
         });
 
-        sliderContainer.addEventListener('touchmove', (e) => {
-            endX = e.touches[0].clientX;
+        // Atualiza indicadores ao scroll manual
+        slider.addEventListener('scroll', () => {
+            const slideWidth = slides[0].offsetWidth + 20;
+            currentSlide = Math.round(slider.scrollLeft / slideWidth);
+            indicators.forEach((ind, idx) => {
+                ind.classList.toggle('active', idx === currentSlide);
+            });
         });
-
-        sliderContainer.addEventListener('touchend', () => {
-            const diff = startX - endX;
-            const threshold = 50; // Minimum swipe distance
-
-            if (Math.abs(diff) > threshold) {
-                if (diff > 0) {
-                    nextSlide(); // Swipe left - next slide
-                } else {
-                    prevSlide(); // Swipe right - previous slide
-                }
-            }
-            
-            setTimeout(startAutoSlide, 3000); // Restart auto-slide after touch
-        });
-
-        // Initialize slider
-        updateSlider();
 
         // Add typing effect to code
         const codeLines = document.querySelectorAll('.code-line');
